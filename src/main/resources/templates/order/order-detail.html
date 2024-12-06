@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body" th:data-role="${#authentication.getAuthorities()}">
+	<nav th:replace="~{layout :: navigation}"></nav>
+	<header th:replace="~{layout :: header (${breadCrumbs})}"></header>
+	<main>
+		<div class="grid-container order-detail">
+			<section class="header-info" th:object="${header}">
+		        <div>Cashier: <span th:text="*{username}"></span></div>
+		        <div>Client Name: <span th:text="*{clientName}"></span></div>
+		        <div>Order Date: <span th:text="*{orderDate}"></span></div>
+		    </section>
+			<a class="blue-button" th:href="@{/order}"><i class="fas fa-chevron-left"></i> Back</a>
+		    <a class="blue-button create-button" 
+		    	th:href="@{/order/upsertDetailForm(invoiceNumber=${header.invoiceNumber})}">Add New Detail</a>
+			<table>
+		        <thead>
+		            <tr>
+		                <th>Action</th>
+		                <th>Product</th>
+		                <th>Price Per Unit</th>
+		                <th>Quantity</th>
+		                <th>Total</th>
+		            </tr>
+		        </thead>
+		        <tbody>			
+					<tr th:each="orderDetail : ${grid}" th:object="${orderDetail}">
+						<td>
+							<a th:href="@{/order/upsertDetailForm(orderDetailId=*{orderDetailId})}" class="blue-button">Edit</a>
+							<a th:href="@{/order/deleteDetail(orderDetailId=*{orderDetailId})}" class="blue-button">Delete</a>
+						</td>
+						<td th:text="*{productName}"></td>
+						<td th:text="*{formatedPrice}"></td>
+						<td th:text="*{quantity}"></td>
+						<td th:text="*{totalPrice}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</main>
+	<footer th:replace="~{layout :: footer}"></footer>
+	<th:block th:replace="~{layout :: javascript}"></th:block>
+</body>
+</html>

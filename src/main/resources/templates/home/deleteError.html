@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{login-layout :: head}"></head>
+<body class="authentication-body">
+<div class="authentication-wrapper">
+  <header th:replace="~{login-layout :: header}"></header>
+  <main>
+    <h1>Delete cannot be undone</h1>
+    <p>this data are still used in another menu.</p>
+    <div class="link-container">
+      <a th:href="@{/}">Back to landing page</a>
+    </div>
+  </main>
+</div>
+</body>
+</html>

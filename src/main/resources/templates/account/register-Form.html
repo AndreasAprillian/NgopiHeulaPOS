@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+<nav th:replace="~{layout :: navigation}"></nav>
+<header th:replace="~{layout :: header (${breadCrumbs})}"></header>
+<main>
+    <div class="grid-container">
+        <form class="upsert-form" method="post" th:attr="action=@{/account/register}" enctype="multipart/form-data" th:object="${dto}">
+            <table>
+                <tr>
+                    <td>
+                        <input type="text" name="username" placeholder="Username" th:field="*{username}">
+                        <div class="field-validation-error" th:errors="*{username}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="password" placeholder="Password" th:field="*{password}">
+                        <div class="field-validation-error" th:errors="*{password}"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="text" name="passwordConfirm" placeholder="Password Confirm" th:field="*{passwordConfirm}">
+                        <div class="field-validation-error" th:errors="*{passwordConfirm}"></div>
+                        <div class="field-validation-error" th:errors="${dto}"></div>
+                    </td>
+                </tr>
+<!--                <tr>-->
+<!--                    <td>-->
+<!--                        <input type="text" name="role" placeholder="Role" th:field="*{role}">-->
+<!--                        <div class="field-validation-error" th:errors="*{role}"></div>-->
+<!--                    </td>-->
+<!--                </tr>-->
+                <tr>
+                    <td>
+                        <select th:field="*{role}">
+                            <option th:value="null">Select Role</option>
+                            <option th:each="option : ${Dropdown}" th:value="${option.value}" th:text="${option.text}"
+                            th:selected="${option.value == role}"/>
+                        </select>
+                        <div class="field-validation-error" th:errors="*{role}"></div>
+                    </td>
+                </tr>
+            </table>
+            <button class="blue-button" type="submit">Register</button>
+            <a class="blue-button" th:href="@{/account/index}"><i class="fas fa-chevron-left"></i> Back</a>
+        </form>
+    </div>
+</main>
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

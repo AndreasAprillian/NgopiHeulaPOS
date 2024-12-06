@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body" th:data-role="${#authentication.getAuthorities()}">
+	<nav th:replace="~{layout :: navigation}"></nav>
+	<header th:replace="~{layout :: header (${breadCrumbs})}"></header>
+	<main>
+		<div class="grid-container order-index">
+			<form method="get" class="filter" th:attr="action=@{/order}">
+				<input type="text" name="name" placeholder="Client Name" th:attr="value=${clientName}">
+				<select name="username">
+					<option th:value="null">Search Cashier</option>
+					<option th:each="option : ${cashierDropdown}" th:value="${option.value}"
+							th:text="${option.text}" th:selected="${option.value == username}"></option>
+				</select>
+				<button class="blue-button" type="submit">
+					<i class="fas fa-search"></i>
+				</button>
+			</form>
+			<a class="blue-button" th:href="@{/order/upsertForm}"><i class="fas fa-plus"></i> order</a>
+			<table>
+				<thead>
+				<tr>
+					<th>Action</th>
+					<th>Cashier</th>
+					<th>Client Name</th>
+					<th>OrderDate</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr th:each="order : ${grid}" th:object="${order}">
+					<td>
+						<a th:href="@{/order/detail(invoiceNumber=*{invoiceNumber})}" class="blue-button detail-button">Detail</a>
+						<a th:href="@{/order/upsertForm(invoiceNumber=*{invoiceNumber})}" class="blue-button update-button">Edit</a>
+						<a th:href="@{/order/delete(invoiceNumber=*{invoiceNumber})}" class="blue-button delete-button">Delete</a>
+					</td>
+					<td th:text="*{username}"></td>
+					<td th:text="*{clientName}"></td>
+					<td th:text="*{formatedOrderDate}"></td>
+				</tr>
+				</tbody>
+				<tfoot>
+				<tr>
+					<td colspan="3">
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+	</main>
+	<footer th:replace="~{layout :: footer}"></footer>
+	<th:block th:replace="~{layout :: javascript}"></th:block>
+</body>
+</html>

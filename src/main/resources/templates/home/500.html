@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{login-layout :: head}"></head>
+<body class="authentication-body">
+<div class="authentication-wrapper">
+    <header th:replace="~{login-layout :: header}"></header>
+    <main>
+        <h1>Error 500 Internal Server Error :(</h1>
+        <p>We're sorry for this error.</p>
+        <p>Looks like our server having a problem, we will fix it as soon as possible.</p>
+        <div class="link-container">
+            <a th:href="@{/}">Back to landing page</a>
+        </div>
+    </main>
+</div>
+</body>
+</html>

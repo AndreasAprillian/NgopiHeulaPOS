@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body" th:data-role="${#authentication.getAuthorities()}">
+	<nav th:replace="~{layout :: navigation}"></nav>
+	<header th:replace="~{layout :: header (${breadCrumbs})}"></header>
+	<main>
+		<div class="grid-container category-index">
+		    <form method="get" class="filter" th:attr="action=@{/category}">
+		        <input type="text" name="name" placeholder="Category Name" th:attr="value=${name}">
+				<button class="blue-button" type="submit">
+					<i class="fas fa-search"></i>
+				</button>
+		    </form>
+			<a class="blue-button" th:href="@{/category/upsertForm}" sec:authorize="hasAuthority('admin')"><i class="fas fa-plus"></i> Category</a>
+			<table>
+		        <thead>
+		            <tr>
+		                <th sec:authorize="hasAuthority('admin')">Action</th>
+		                <th>Name</th>
+		                <th>Description</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+			        <tr th:each="category : ${grid}" th:object="${category}">
+						<td sec:authorize="hasAuthority('admin')">
+							<a th:href="@{/category/upsertForm(categoryId=*{categoryId})}" class="blue-button update-button">Edit</a>
+							<a th:href="@{/category/delete(categoryId=*{categoryId})}" class="blue-button delete-button">Delete</a>
+						</td>
+						<td th:text="*{name}"></td>
+						<td th:text="*{description}"></td>
+					</tr>
+		        </tbody>
+				<tfoot>
+		            <tr>
+		                <td colspan="3">
+		                </td>
+		            </tr>
+		        </tfoot>
+			</table>
+		</div>
+	</main>
+	<footer th:replace="~{layout :: footer}"></footer>
+	<th:block th:replace="~{layout :: javascript}"></th:block>
+</body>
+</html>

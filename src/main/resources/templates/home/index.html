@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body">
+<nav th:replace="~{layout :: navigation}"></nav>
+<header th:replace="~{layout :: header (${breadCrumbs})}"></header>
+<main>
+  <div class="welcome-wrapper">
+  <h1 class="welcome-word">NgopiHeula</h1>
+  <h2 class="welcome-word">Hidup dimulai setelah secangkir kopi.<br>
+    Kopi hitam, hidup penuh rasa. <br>
+    Dunia mungkin tidak sempurna, tapi kopi selalu ada untuk memperbaiki suasana <br>
+     <br>
+  </h2>
+  </div>
+</main>
+<footer th:replace="~{layout :: footer}"></footer>
+<script th:replace="~{layout :: javascript}"></script>
+</body>
+</html>

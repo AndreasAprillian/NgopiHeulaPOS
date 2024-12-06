@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head th:replace="~{layout :: head}"></head>
+<body class="main-body" th:data-role="${#authentication.getAuthorities()}">
+	<nav th:replace="~{layout :: navigation}"></nav>
+	<header th:replace="~{layout :: header (${breadCrumbs})}"></header>
+	<main>
+		<div class="grid-container product-index">
+			<form method="get" class="filter" th:attr="action=@{/product/index}">
+				<input type="text" name="name" placeholder="Product Name..." th:attr="value=${productName}">
+				<select name="categoryId">
+					<option th:value="null">Search Category</option>
+					<option th:each="option : ${categoryDropdown}" th:value="${option.value}"
+							th:text="${option.text}" th:selected="${option.value == categoryId}"></option>
+				</select>
+				<button class="blue-button" type="submit">
+					<i class="fas fa-search"></i>
+				</button>
+			</form>
+			<a class="blue-button" th:href="@{/product/upsertForm}" sec:authorize="hasAuthority('admin')"><i class="fas fa-plus"></i> Product</a>
+			<table>
+				<thead>
+				<tr>
+					<th sec:authorize="hasAuthority('admin')">Action</th>
+					<th>Name</th>
+					<th>Category</th>
+					<th>Available</th>
+					<th>Price</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr th:each="product : ${grid}" th:object="${product}">
+					<td sec:authorize="hasAuthority('admin')">
+						<a th:href="@{/product/upsertForm(productId=*{productId})}" class="blue-button update-button">Edit</a>
+						<a th:href="@{/product/delete(productId=*{productId})}" class="blue-button delete-button">Delete</a>
+					</td>
+					<td th:text="*{name}"></td>
+					<td th:text="*{categoryName}"></td>
+					<td th:text="*{isAvailableFormated}"></td>
+					<td th:text="*{formatedPrice}"></td>
+				</tr>
+				</tbody>
+				<tfoot>
+				<tr>
+					<td colspan="3">
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+	</main>
+	<footer th:replace="~{layout :: footer}"></footer>
+	<th:block th:replace="~{layout :: javascript}"></th:block>
+</body>
+</html>
